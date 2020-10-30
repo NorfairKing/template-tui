@@ -74,4 +74,24 @@ If you don't need this, you can delete the `casts` directory and the relevant pa
 
 ### Workflow examples
 
-TODO
+#### Adding functionality to the TUI
+
+Brick, the TUI library that we use, uses the following architecture.
+
+```
+         Start
+           |
+           v
+Event -> State -> Draw
+  |                |
+  \----- Brick-----/
+```
+
+To add functionality:
+
+1. Change the `State` to have what you need for your functionality.
+   Remember that this state needs to contain everything that you may want to draw on the screen.
+2. If some long-running IO needs to happen, change the `Request` and `Response` type to support the messages that need to be sent.
+   Also add the request handling to the `Worker`.
+3. Change the `draw` function to draw the new state.
+4. Add any event handling that's necessary to the `handle` function.
