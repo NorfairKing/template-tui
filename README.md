@@ -41,6 +41,13 @@ It contains the following structure:
 - The worker function in `Foobar.TUI.Worker`
 - The event handling in `Foobar.TUI.Handle`.
 
+### OptParse
+
+The option parsing is based on [the option parsing template](https://github.com/NorfairKing/template-optparse).
+It is included in this template so you will not need to also buy the option parsing template.
+
+For more information about how to use the option parsing, follow the instructions in `template-cli/src/Foobar/Cli/OptParse.hs`.
+
 ### Nix build
 
 If you don't need a nix build, remove these files:
