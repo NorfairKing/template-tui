@@ -30,6 +30,8 @@ It contains the following structure:
 - The entry point in `Foobar.TUI`.
 - The TUI state in `Foobar.TUI.State`.
 - The rendering in `Foobar.TUI.Draw`.
+- The Worker environment and types in `Foobar.TUI.Env`
+- The worker function in `Foobar.TUI.Worker`
 - The event handling in `Foobar.TUI.Handle`.
 
 ### Nix build
