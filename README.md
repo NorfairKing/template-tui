@@ -3,6 +3,7 @@
 This is a template implementation of a tool with a terminal user interface.
 
 * Haskell code for a TUI with all best practices
+* OptParse for the TUI
 * A nix build
 * An example cast for documentation
 * CI
