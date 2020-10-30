@@ -21,9 +21,13 @@ with final.haskell.lib;
               ) (final.haskellPackages.autoexporter)
             )
           );
+      foobarPkgWithComp =
+        exeName: name:
+          generateOptparseApplicativeCompletion exeName (foobarPkg name);
+      foobarPkgWithOwnComp = name: foobarPkgWithComp name name;
     in
       {
-        "foobar-tui" = foobarPkg "foobar-tui";
+        "foobar-tui" = foobarPkgWithOwnComp "foobar-tui";
       };
 
   # This attribute puts them all together into one.
@@ -67,7 +71,25 @@ with final.haskell.lib;
               )
             ) (
               self: super:
-                final.foobarPackages
+                with final.haskell.lib;
+                let
+                  # envparse
+                  envparseRepo =
+                    final.fetchFromGitHub {
+                      owner = "supki";
+                      repo = "envparse";
+                      rev = "de5944fb09e9d941fafa35c0f05446af348e7b4d";
+                      sha256 =
+                        "sha256:0piljyzplj3bjylnxqfl4zpc3vc88i9fjhsj06bk7xj48dv3jg3b";
+                    };
+                  envparsePkg =
+                    dontCheck (
+                      self.callCabal2nix "envparse" (envparseRepo) {}
+                    );
+                in
+                  final.foobarPackages // {
+                    envparse = self.callHackage "envparse" "0.4.1" {};
+                  }
             );
         }
     );

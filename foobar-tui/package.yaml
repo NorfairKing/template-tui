@@ -12,8 +12,15 @@ library:
   - brick
   - cursor
   - directory
+  - envparse
   - mtl
+  - optparse-applicative
+  - path
+  - path-io
+  - text
   - vty
+  - yaml
+  - yamlparse-applicative
 
 executables:
   foobar-tui:

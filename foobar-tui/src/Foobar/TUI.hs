@@ -1,4 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE RecordWildCards #-}
 
 module Foobar.TUI where
 
@@ -9,12 +10,14 @@ import Control.Monad.Reader
 import Foobar.TUI.Draw
 import Foobar.TUI.Env
 import Foobar.TUI.Handle
+import Foobar.TUI.OptParse
 import Foobar.TUI.State
 import Foobar.TUI.Worker
 import Graphics.Vty (defaultConfig, mkVty)
 
 foobarTUI :: IO ()
 foobarTUI = do
+  Settings {..} <- getSettings
   initialState <- buildInitialState
   reqChan <- newBChan 1000
   respChan <- newBChan 1000
