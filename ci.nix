@@ -15,4 +15,4 @@ in
       ormolu.enable = true;
     };
   };
-}
+} // pkgs.foobarPackages // pkgs.foobarCasts

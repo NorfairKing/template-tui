@@ -2,7 +2,13 @@
 
 This is a template implementation of a tool with a terminal user interface.
 
-* Haskell code for a TUI
+* Haskell code for a TUI with all best practices
+* A nix build
+* An example cast for documentation
+* CI
+  * Stack-based CI
+  * Nix-based CI
+* Pre-commit hooks
 
 ## License
 
@@ -59,6 +65,12 @@ For the nix build to work, there is a manual step that you need to go through:
 First, make a cachix cache at cachix.org.
 Put its name in the right places within `.github/workflows/nix.yaml`.
 Then put its signing key in the 'Secrets' part of your repository on github.
+
+### Casts
+
+An example [autorecorder](https://github.com/NorfairKing/autorecorder) cast is provided in the `casts` directory.
+You can declare ascii casts for your TUI for documentation using autorecorder.
+If you don't need this, you can delete the `casts` directory and the relevant part of `nix/overlay.nix` and `ci.nix`.
 
 ### Workflow examples
 

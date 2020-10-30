@@ -1,0 +1,8 @@
+packages:
+- foobar-tui
+working-dir: .
+input:
+- type: "foobar-tui\n"
+- wait: 2000
+- send: "q"
+- wait: 500
