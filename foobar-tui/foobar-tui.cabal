@@ -13,17 +13,21 @@ library
   exposed-modules:
       Foobar.TUI
       Foobar.TUI.Draw
+      Foobar.TUI.Env
       Foobar.TUI.Handle
       Foobar.TUI.State
+      Foobar.TUI.Worker
   other-modules:
       Paths_foobar_tui
   hs-source-dirs:
       src
   build-depends:
-      base >=4.7 && <5
+      async
+    , base >=4.7 && <5
     , brick
     , cursor
     , directory
+    , mtl
     , vty
   default-language: Haskell2010
 

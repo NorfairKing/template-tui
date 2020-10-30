@@ -2,14 +2,18 @@ name:                foobar-tui
 version:             0.0.0.0
 license:             AllRightsReserved
 
+dependencies:
+- base >= 4.7 && < 5
+
 library:
   source-dirs: src
   dependencies:
-  - base >= 4.7 && < 5
+  - async
   - brick
-  - vty
-  - directory
   - cursor
+  - directory
+  - mtl
+  - vty
 
 executables:
   foobar-tui:
@@ -20,5 +24,4 @@ executables:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - base >= 4.7 && < 5
     - foobar-tui
