@@ -1,0 +1,4 @@
+resolver: lts-15.15
+packages:
+- foobar-tui
+
