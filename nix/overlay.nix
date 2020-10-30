@@ -51,7 +51,7 @@ with final.haskell.lib;
         foobar-basics-cast = mkCastDerivation {
           name = "foobar-basics-cast";
           src = ../casts/basics.yaml;
-          debug = true;
+          debug = false;
         };
       };
 

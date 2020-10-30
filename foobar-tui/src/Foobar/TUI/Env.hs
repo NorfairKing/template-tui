@@ -6,7 +6,6 @@ data Env
   = Env
       {
       }
-  deriving (Show, Eq, Ord)
 
 type W = ReaderT Env IO
 
