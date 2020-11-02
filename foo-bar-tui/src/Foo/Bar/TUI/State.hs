@@ -1,4 +1,4 @@
-module Foobar.TUI.State where
+module Foo.Bar.TUI.State where
 
 data State = State
   deriving (Show)

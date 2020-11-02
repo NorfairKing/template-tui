@@ -22,31 +22,31 @@ All Rights Reserved.
 
 ## Instructions
 
-To use this template in a new project, choose the name for your project, for example `shelter`.
+To use this template in a new project, choose the name for your project, for example `homeless-shelter`.
 Then use [template-filler](https://github.com/NorfairKing/template-filler) to use the template, like this:
 
 ```
-template-filler --source /path/to/this/template-cli --destination /path/to/your/shelter --find Foobar --replace Shelter
+template-filler --source /path/to/this/template-cli --destination /path/to/your/homeless-shelter --find FooBar --replace HomelessShelter
 ```
 
 ### Template overview
 
-There is a single Haskell package in `foobar-tui`.
+There is a single Haskell package in `foo-bar-tui`.
 It contains the following structure:
 
-- The entry point in `Foobar.TUI`.
-- The TUI state in `Foobar.TUI.State`.
-- The rendering in `Foobar.TUI.Draw`.
-- The Worker environment and types in `Foobar.TUI.Env`
-- The worker function in `Foobar.TUI.Worker`
-- The event handling in `Foobar.TUI.Handle`.
+- The entry point in `Foo.Bar.TUI`.
+- The TUI state in `Foo.Bar.TUI.State`.
+- The rendering in `Foo.Bar.TUI.Draw`.
+- The Worker environment and types in `Foo.Bar.TUI.Env`
+- The worker function in `Foo.Bar.TUI.Worker`
+- The event handling in `Foo.Bar.TUI.Handle`.
 
 ### OptParse
 
 The option parsing is based on [the option parsing template](https://github.com/NorfairKing/template-optparse).
 It is included in this template so you will not need to also buy the option parsing template.
 
-For more information about how to use the option parsing, follow the instructions in `template-cli/src/Foobar/Cli/OptParse.hs`.
+For more information about how to use the option parsing, follow the instructions in `template-cli/src/Foo/Bar/Cli/OptParse.hs`.
 
 ### Nix build
 

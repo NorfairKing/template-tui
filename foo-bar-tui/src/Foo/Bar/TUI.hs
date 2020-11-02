@@ -1,22 +1,22 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE RecordWildCards #-}
 
-module Foobar.TUI where
+module Foo.Bar.TUI where
 
 import Brick.BChan
 import Brick.Main
 import Control.Concurrent.Async
 import Control.Monad.Reader
-import Foobar.TUI.Draw
-import Foobar.TUI.Env
-import Foobar.TUI.Handle
-import Foobar.TUI.OptParse
-import Foobar.TUI.State
-import Foobar.TUI.Worker
+import Foo.Bar.TUI.Draw
+import Foo.Bar.TUI.Env
+import Foo.Bar.TUI.Handle
+import Foo.Bar.TUI.OptParse
+import Foo.Bar.TUI.State
+import Foo.Bar.TUI.Worker
 import Graphics.Vty (defaultConfig, mkVty)
 
-foobarTUI :: IO ()
-foobarTUI = do
+fooBarTUI :: IO ()
+fooBarTUI = do
   Settings {..} <- getSettings
   initialState <- buildInitialState
   reqChan <- newBChan 1000

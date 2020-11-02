@@ -1,4 +1,4 @@
-name:                foobar-tui
+name:                foo-bar-tui
 version:             0.0.0.0
 license:             AllRightsReserved
 
@@ -23,7 +23,7 @@ library:
   - yamlparse-applicative
 
 executables:
-  foobar-tui:
+  foo-bar-tui:
     main:                Main.hs
     source-dirs:         app
     ghc-options:
@@ -31,4 +31,4 @@ executables:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - foobar-tui
+    - foo-bar-tui

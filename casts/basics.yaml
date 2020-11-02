@@ -1,8 +1,8 @@
 packages:
-- foobar-tui
+- foo-bar-tui
 working-dir: .
 input:
-- type: "foobar-tui\n"
+- type: "foo-bar-tui\n"
 - wait: 2000
 - send: "q"
 - wait: 500

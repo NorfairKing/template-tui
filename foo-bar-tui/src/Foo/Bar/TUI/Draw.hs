@@ -1,9 +1,9 @@
-module Foobar.TUI.Draw where
+module Foo.Bar.TUI.Draw where
 
 import Brick.AttrMap
 import Brick.Types
 import Brick.Widgets.Core
-import Foobar.TUI.State
+import Foo.Bar.TUI.State
 import Graphics.Vty.Attributes
 
 buildAttrMap :: State -> AttrMap

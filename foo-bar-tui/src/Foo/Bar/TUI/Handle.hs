@@ -1,11 +1,11 @@
-module Foobar.TUI.Handle where
+module Foo.Bar.TUI.Handle where
 
 import Brick.BChan
 import Brick.Main
 import Brick.Types
 import Control.Monad.IO.Class
-import Foobar.TUI.Env
-import Foobar.TUI.State
+import Foo.Bar.TUI.Env
+import Foo.Bar.TUI.State
 import Graphics.Vty.Input.Events
 
 handleTuiEvent :: BChan Request -> State -> BrickEvent n Response -> EventM n (Next State)

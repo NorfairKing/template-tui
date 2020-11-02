@@ -1,9 +1,9 @@
-module Foobar.TUI.Worker where
+module Foo.Bar.TUI.Worker where
 
 import Brick.BChan
 import Control.Monad
 import Control.Monad.IO.Class
-import Foobar.TUI.Env
+import Foo.Bar.TUI.Env
 
 tuiWorker :: BChan Request -> BChan Response -> W ()
 tuiWorker reqChan respChan = forever $ do

@@ -1,4 +1,4 @@
-module Foobar.TUI.Env where
+module Foo.Bar.TUI.Env where
 
 import Control.Monad.Reader
 

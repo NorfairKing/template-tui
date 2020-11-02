@@ -5,9 +5,9 @@ with final.lib;
 with final.haskell.lib;
 {
   # This attribute contains all packages in this repository.
-  foobarPackages =
+  fooBarPackages =
     let
-      foobarPkg =
+      fooBarPkg =
         name:
           dontHaddock (
             doBenchmark (
@@ -21,23 +21,23 @@ with final.haskell.lib;
               ) (final.haskellPackages.autoexporter)
             )
           );
-      foobarPkgWithComp =
+      fooBarPkgWithComp =
         exeName: name:
-          generateOptparseApplicativeCompletion exeName (foobarPkg name);
-      foobarPkgWithOwnComp = name: foobarPkgWithComp name name;
+          generateOptparseApplicativeCompletion exeName (fooBarPkg name);
+      fooBarPkgWithOwnComp = name: fooBarPkgWithComp name name;
     in
       {
-        "foobar-tui" = foobarPkgWithOwnComp "foobar-tui";
+        "foo-bar-tui" = fooBarPkgWithOwnComp "foo-bar-tui";
       };
 
   # This attribute puts them all together into one.
-  foobarRelease =
+  fooBarRelease =
     final.symlinkJoin {
-      name = "foobar-release";
-      paths = attrValues final.foobarPackages;
+      name = "fooBar-release";
+      paths = attrValues final.fooBarPackages;
     };
 
-  foobarCasts =
+  fooBarCasts =
     let
       mkCastDerivation = import (
         builtins.fetchGit {
@@ -45,11 +45,11 @@ with final.haskell.lib;
           rev = "da5bf9d61108a4a89addc8203b1579a364ce8c01";
           ref = "master";
         } + "/nix/cast.nix"
-      ) { pkgs = final // final.foobarPackages; };
+      ) { pkgs = final // final.fooBarPackages; };
     in
       {
-        foobar-basics-cast = mkCastDerivation {
-          name = "foobar-basics-cast";
+        fooBar-basics-cast = mkCastDerivation {
+          name = "foo-bar-basics-cast";
           src = ../casts/basics.yaml;
           debug = false;
         };
@@ -87,7 +87,7 @@ with final.haskell.lib;
                       self.callCabal2nix "envparse" (envparseRepo) {}
                     );
                 in
-                  final.foobarPackages // {
+                  final.fooBarPackages // {
                     envparse = self.callHackage "envparse" "0.4.1" {};
                   }
             );

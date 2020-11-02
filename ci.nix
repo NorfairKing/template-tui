@@ -6,7 +6,7 @@ let
     );
 in
 {
-  release = pkgs.foobarRelease;
+  release = pkgs.fooBarRelease;
   pre-commit-hooks = nix-pre-commit-hooks.run {
     src = ./.;
     hooks = {
@@ -15,4 +15,4 @@ in
       ormolu.enable = true;
     };
   };
-} // pkgs.foobarPackages // pkgs.foobarCasts
+} // pkgs.fooBarPackages // pkgs.fooBarCasts
