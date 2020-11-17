@@ -26,7 +26,7 @@ To use this template in a new project, choose the name for your project, for exa
 Then use [template-filler](https://github.com/NorfairKing/template-filler) to use the template, like this:
 
 ```
-template-filler --source /path/to/this/template-cli --destination /path/to/your/homeless-shelter --find FooBar --replace HomelessShelter
+template-filler --source /path/to/this/template-tui --destination /path/to/your/homeless-shelter --find FooBar --replace HomelessShelter
 ```
 
 ### Template overview
@@ -46,7 +46,7 @@ It contains the following structure:
 The option parsing is based on [the option parsing template](https://github.com/NorfairKing/template-optparse).
 It is included in this template so you will not need to also buy the option parsing template.
 
-For more information about how to use the option parsing, follow the instructions in `template-cli/src/Foo/Bar/Cli/OptParse.hs`.
+For more information about how to use the option parsing, follow the instructions in `template-tui/src/Foo/Bar/TUI/OptParse.hs`.
 
 ### Nix build
 
