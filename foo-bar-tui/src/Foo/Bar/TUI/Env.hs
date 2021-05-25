@@ -2,10 +2,9 @@ module Foo.Bar.TUI.Env where
 
 import Control.Monad.Reader
 
-data Env
-  = Env
-      {
-      }
+data Env = Env
+  {
+  }
 
 type W = ReaderT Env IO
 

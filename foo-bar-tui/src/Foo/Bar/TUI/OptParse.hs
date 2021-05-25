@@ -25,10 +25,9 @@ getSettings = do
   config <- getConfiguration flags env
   combineToSettings flags env config
 
-data Settings
-  = Settings
-      { setPort :: Int -- Just an example
-      }
+data Settings = Settings
+  { setPort :: Int -- Just an example
+  }
   deriving (Show, Eq, Generic)
 
 combineToSettings :: Flags -> Environment -> Maybe Configuration -> IO Settings
@@ -39,10 +38,9 @@ combineToSettings Flags {..} Environment {..} mConf = do
     mc :: (Configuration -> Maybe a) -> Maybe a
     mc f = mConf >>= f
 
-data Configuration
-  = Configuration
-      { confPort :: Maybe Int
-      }
+data Configuration = Configuration
+  { confPort :: Maybe Int
+  }
   deriving (Show, Eq, Generic)
 
 instance FromJSON Configuration where
@@ -66,11 +64,10 @@ defaultConfigFile = do
   xdgConfigDir <- getXdgDir XdgConfig (Just [reldir|optparse-template|])
   resolveFile xdgConfigDir "config.yaml"
 
-data Environment
-  = Environment
-      { envConfigFile :: Maybe FilePath,
-        envPort :: Maybe Int
-      }
+data Environment = Environment
+  { envConfigFile :: Maybe FilePath,
+    envPort :: Maybe Int
+  }
   deriving (Show, Eq, Generic)
 
 getEnvironment :: IO Environment
@@ -110,11 +107,10 @@ flagsParser =
           T.unpack (YamlParse.prettyColourisedSchemaDoc @Configuration)
         ]
 
-data Flags
-  = Flags
-      { flagConfigFile :: Maybe FilePath,
-        flagPort :: Maybe Int
-      }
+data Flags = Flags
+  { flagConfigFile :: Maybe FilePath,
+    flagPort :: Maybe Int
+  }
   deriving (Show, Eq, Generic)
 
 parseFlags :: OptParse.Parser Flags

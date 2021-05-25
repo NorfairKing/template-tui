@@ -9,26 +9,28 @@ with final.haskell.lib;
     let
       fooBarPkg =
         name:
-          dontHaddock (
-            doBenchmark (
-              addBuildDepend (
+        dontHaddock (
+          doBenchmark (
+            addBuildDepend
+              (
                 failOnAllWarnings (
                   disableLibraryProfiling (
                     # I turn off library profiling because it slows down the build.
-                    final.haskellPackages.callCabal2nix name (final.gitignoreSource (../. + "/${name}")) {}
+                    final.haskellPackages.callCabal2nix name (final.gitignoreSource (../. + "/${name}")) { }
                   )
                 )
-              ) (final.haskellPackages.autoexporter)
-            )
-          );
+              )
+              (final.haskellPackages.autoexporter)
+          )
+        );
       fooBarPkgWithComp =
         exeName: name:
-          generateOptparseApplicativeCompletion exeName (fooBarPkg name);
+        generateOptparseApplicativeCompletion exeName (fooBarPkg name);
       fooBarPkgWithOwnComp = name: fooBarPkgWithComp name name;
     in
-      {
-        "foo-bar-tui" = fooBarPkgWithOwnComp "foo-bar-tui";
-      };
+    {
+      "foo-bar-tui" = fooBarPkgWithOwnComp "foo-bar-tui";
+    };
 
   # This attribute puts them all together into one.
   fooBarRelease =
@@ -39,21 +41,24 @@ with final.haskell.lib;
 
   fooBarCasts =
     let
-      mkCastDerivation = import (
-        builtins.fetchGit {
-          url = "https://github.com/NorfairKing/autorecorder";
-          rev = "da5bf9d61108a4a89addc8203b1579a364ce8c01";
-          ref = "master";
-        } + "/nix/cast.nix"
-      ) { pkgs = final // final.fooBarPackages; };
+      mkCastDerivation = import
+        (
+          builtins.fetchGit
+            {
+              url = "https://github.com/NorfairKing/autorecorder";
+              rev = "da5bf9d61108a4a89addc8203b1579a364ce8c01";
+              ref = "master";
+            } + "/nix/cast.nix"
+        )
+        { pkgs = final // final.fooBarPackages; };
     in
-      {
-        fooBar-basics-cast = mkCastDerivation {
-          name = "foo-bar-basics-cast";
-          src = ../casts/basics.yaml;
-          debug = false;
-        };
+    {
+      fooBar-basics-cast = mkCastDerivation {
+        name = "foo-bar-basics-cast";
+        src = ../casts/basics.yaml;
+        debug = false;
       };
+    };
 
 
   # This is where we specify specific haskell package versions.
@@ -61,15 +66,17 @@ with final.haskell.lib;
   haskellPackages =
     previous.haskellPackages.override (
       old:
-        {
-          overrides =
-            final.lib.composeExtensions (
+      {
+        overrides =
+          final.lib.composeExtensions
+            (
               old.overrides or (
                 _:
                 _:
-                  {}
+                { }
               )
-            ) (
+            )
+            (
               self: super:
                 with final.haskell.lib;
                 let
@@ -84,13 +91,13 @@ with final.haskell.lib;
                     };
                   envparsePkg =
                     dontCheck (
-                      self.callCabal2nix "envparse" (envparseRepo) {}
+                      self.callCabal2nix "envparse" (envparseRepo) { }
                     );
                 in
-                  final.fooBarPackages // {
-                    envparse = self.callHackage "envparse" "0.4.1" {};
-                  }
+                final.fooBarPackages // {
+                  envparse = self.callHackage "envparse" "0.4.1" { };
+                }
             );
-        }
+      }
     );
 }
