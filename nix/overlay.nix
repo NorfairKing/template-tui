@@ -9,20 +9,16 @@ with final.haskell.lib;
     let
       fooBarPkg =
         name:
-        dontHaddock (
-          doBenchmark (
-            addBuildDepend
-              (
-                failOnAllWarnings (
-                  disableLibraryProfiling (
-                    # I turn off library profiling because it slows down the build.
-                    final.haskellPackages.callCabal2nix name (final.gitignoreSource (../. + "/${name}")) { }
-                  )
-                )
+        addBuildDepend
+          (
+            buildStrictly (
+              disableLibraryProfiling (
+                # I turn off library profiling because it slows down the build.
+                final.haskellPackages.callCabal2nixWithOptions name (final.gitignoreSource (../. + "/${name}")) "--no-hpack" { }
               )
-              (final.haskellPackages.autoexporter)
+            )
           )
-        );
+          (final.haskellPackages.autoexporter);
       fooBarPkgWithComp =
         exeName: name:
         generateOptparseApplicativeCompletion exeName (fooBarPkg name);
@@ -36,19 +32,13 @@ with final.haskell.lib;
   fooBarRelease =
     final.symlinkJoin {
       name = "fooBar-release";
-      paths = attrValues final.fooBarPackages;
+      paths = builtins.map justStaticExecutables (attrValues final.fooBarPackages);
     };
 
   fooBarCasts =
     let
       mkCastDerivation = import
-        (
-          builtins.fetchGit
-            {
-              url = "https://github.com/NorfairKing/autorecorder";
-              rev = "da5bf9d61108a4a89addc8203b1579a364ce8c01";
-              ref = "master";
-            } + "/nix/cast.nix"
+        (sources.autorecorder + "/nix/cast.nix"
         )
         { pkgs = final // final.fooBarPackages; };
     in
@@ -78,25 +68,7 @@ with final.haskell.lib;
             )
             (
               self: super:
-                with final.haskell.lib;
-                let
-                  # envparse
-                  envparseRepo =
-                    final.fetchFromGitHub {
-                      owner = "supki";
-                      repo = "envparse";
-                      rev = "de5944fb09e9d941fafa35c0f05446af348e7b4d";
-                      sha256 =
-                        "sha256:0piljyzplj3bjylnxqfl4zpc3vc88i9fjhsj06bk7xj48dv3jg3b";
-                    };
-                  envparsePkg =
-                    dontCheck (
-                      self.callCabal2nix "envparse" (envparseRepo) { }
-                    );
-                in
-                final.fooBarPackages // {
-                  envparse = self.callHackage "envparse" "0.4.1" { };
-                }
+                final.fooBarPackages
             );
       }
     );

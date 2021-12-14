@@ -1,4 +1,5 @@
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingVia #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE QuasiQuotes #-}
 {-# LANGUAGE RecordWildCards #-}
@@ -6,17 +7,19 @@
 
 module Foo.Bar.TUI.OptParse where
 
+import Autodocodec
+import Autodocodec.Yaml
 import Control.Applicative
 import Data.Maybe
 import qualified Data.Text as T
-import Data.Yaml
+import qualified Data.Text.Encoding as TE
+import Data.Yaml (FromJSON, ToJSON)
 import qualified Env
 import GHC.Generics (Generic)
 import Options.Applicative as OptParse
 import qualified Options.Applicative.Help as OptParse (string)
 import Path
 import Path.IO
-import YamlParse.Applicative as YamlParse
 
 getSettings :: IO Settings
 getSettings = do
@@ -26,7 +29,7 @@ getSettings = do
   combineToSettings flags env config
 
 data Settings = Settings
-  { setPort :: Int -- Just an example
+  { setPort :: !Int -- Just an example
   }
   deriving (Show, Eq, Generic)
 
@@ -39,34 +42,32 @@ combineToSettings Flags {..} Environment {..} mConf = do
     mc f = mConf >>= f
 
 data Configuration = Configuration
-  { confPort :: Maybe Int
+  { confPort :: !(Maybe Int)
   }
-  deriving (Show, Eq, Generic)
+  deriving stock (Show, Eq, Generic)
+  deriving (FromJSON, ToJSON) via (Autodocodec Configuration)
 
-instance FromJSON Configuration where
-  parseJSON = viaYamlSchema
-
-instance YamlSchema Configuration where
-  yamlSchema =
-    objectParser "Configuration" $
-      Configuration <$> optionalField "port" "Port"
+instance HasCodec Configuration where
+  codec =
+    object "Configuration" $
+      Configuration <$> optionalField "port" "Port" .= confPort
 
 getConfiguration :: Flags -> Environment -> IO (Maybe Configuration)
 getConfiguration Flags {..} Environment {..} =
   case flagConfigFile <|> envConfigFile of
-    Nothing -> defaultConfigFile >>= YamlParse.readConfigFile
+    Nothing -> defaultConfigFile >>= readYamlConfigFile
     Just cf -> do
       afp <- resolveFile' cf
-      YamlParse.readConfigFile afp
+      readYamlConfigFile afp
 
 defaultConfigFile :: IO (Path Abs File)
 defaultConfigFile = do
-  xdgConfigDir <- getXdgDir XdgConfig (Just [reldir|optparse-template|])
+  xdgConfigDir <- getXdgDir XdgConfig (Just [reldir|foo-bar|])
   resolveFile xdgConfigDir "config.yaml"
 
 data Environment = Environment
-  { envConfigFile :: Maybe FilePath,
-    envPort :: Maybe Int
+  { envConfigFile :: !(Maybe FilePath),
+    envPort :: !(Maybe Int)
   }
   deriving (Show, Eq, Generic)
 
@@ -78,10 +79,8 @@ environmentParser :: Env.Parser Env.Error Environment
 environmentParser =
   Env.prefixed "FOO_BAR_" $
     Environment
-      <$> Env.var (fmap Just . Env.str) "CONFIG_FILE" (mE <> Env.help "Config file")
-      <*> Env.var (fmap Just . Env.auto) "PORT" (mE <> Env.help "Port")
-  where
-    mE = Env.def Nothing <> Env.keep
+      <$> Env.var (fmap Just . Env.str) "CONFIG_FILE" (Env.def Nothing <> Env.help "Config file")
+      <*> Env.var (fmap Just . Env.auto) "PORT" (Env.def Nothing <> Env.help "Port")
 
 getFlags :: IO Flags
 getFlags = customExecParser prefs_ flagsParser
@@ -104,12 +103,12 @@ flagsParser =
         [ Env.helpDoc environmentParser,
           "",
           "Configuration file format:",
-          T.unpack (YamlParse.prettyColourisedSchemaDoc @Configuration)
+          T.unpack (TE.decodeUtf8 (renderColouredSchemaViaCodec @Configuration))
         ]
 
 data Flags = Flags
-  { flagConfigFile :: Maybe FilePath,
-    flagPort :: Maybe Int
+  { flagConfigFile :: !(Maybe FilePath),
+    flagPort :: !(Maybe Int)
   }
   deriving (Show, Eq, Generic)
 

@@ -1,5 +1,4 @@
 {-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE RecordWildCards #-}
 
 module Foo.Bar.TUI where
 
@@ -17,7 +16,8 @@ import Graphics.Vty (defaultConfig, mkVty)
 
 fooBarTUI :: IO ()
 fooBarTUI = do
-  Settings {..} <- getSettings
+  settings <- getSettings
+  print settings
   initialState <- buildInitialState
   reqChan <- newBChan 1000
   respChan <- newBChan 1000

@@ -16,7 +16,7 @@ This is a template implementation of a tool with a terminal user interface.
 This template is **not** free to use.
 See https://template.cs-syd.eu/template/NorfairKing/template-tui for more information.
 
-Copyright (c) 2020 Tom Sydney Kerckhove.
+Copyright (c) 2020-2022 Tom Sydney Kerckhove.
 
 All Rights Reserved.
 

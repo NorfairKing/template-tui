@@ -9,6 +9,8 @@ library:
   source-dirs: src
   dependencies:
   - async
+  - autodocodec
+  - autodocodec-yaml
   - brick
   - cursor
   - directory
@@ -20,7 +22,6 @@ library:
   - text
   - vty
   - yaml
-  - yamlparse-applicative
 
 executables:
   foo-bar-tui:
