@@ -8,16 +8,14 @@ import Foo.Bar.TUI.Env
 import Foo.Bar.TUI.State
 import Graphics.Vty.Input.Events
 
-handleTuiEvent :: BChan Request -> State -> BrickEvent n Response -> EventM n (Next State)
-handleTuiEvent chan s e =
+handleTuiEvent :: BChan Request -> BrickEvent n Response -> EventM n State ()
+handleTuiEvent chan e =
   case e of
     VtyEvent vtye ->
       case vtye of
-        EvKey (KChar 'q') [] -> halt s
-        EvKey (KChar 'e') [] -> do
-          liftIO $ writeBChan chan Request
-          continue s
-        _ -> continue s
+        EvKey (KChar 'q') [] -> halt
+        EvKey (KChar 'e') [] -> liftIO $ writeBChan chan Request
+        _ -> pure ()
     AppEvent resp -> case resp of
-      Response -> continue s
-    _ -> continue s
+      Response -> pure ()
+    _ -> pure ()

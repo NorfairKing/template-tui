@@ -36,7 +36,7 @@ tuiApp chan =
     { appDraw = drawTui,
       appChooseCursor = showFirstCursor,
       appHandleEvent = handleTuiEvent chan,
-      appStartEvent = pure,
+      appStartEvent = pure (),
       appAttrMap = buildAttrMap
     }
 
