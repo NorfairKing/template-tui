@@ -1,4 +1,3 @@
-{-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE DerivingVia #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE QuasiQuotes #-}
@@ -12,9 +11,7 @@ import Autodocodec.Yaml
 import Control.Applicative
 import Data.Maybe
 import qualified Data.Text as T
-import Data.Yaml (FromJSON, ToJSON)
 import qualified Env
-import GHC.Generics (Generic)
 import Options.Applicative as OptParse
 import qualified Options.Applicative.Help as OptParse (string)
 import Path
@@ -30,7 +27,7 @@ getSettings = do
 data Settings = Settings
   { setPort :: !Int -- Just an example
   }
-  deriving (Show, Eq, Generic)
+  deriving (Show)
 
 combineToSettings :: Flags -> Environment -> Maybe Configuration -> IO Settings
 combineToSettings Flags {..} Environment {..} mConf = do
@@ -43,8 +40,6 @@ combineToSettings Flags {..} Environment {..} mConf = do
 data Configuration = Configuration
   { confPort :: !(Maybe Int)
   }
-  deriving stock (Show, Eq, Generic)
-  deriving (FromJSON, ToJSON) via (Autodocodec Configuration)
 
 instance HasCodec Configuration where
   codec =
@@ -68,7 +63,6 @@ data Environment = Environment
   { envConfigFile :: !(Maybe FilePath),
     envPort :: !(Maybe Int)
   }
-  deriving (Show, Eq, Generic)
 
 getEnvironment :: IO Environment
 getEnvironment = Env.parse (Env.header "Environment") environmentParser
@@ -109,7 +103,6 @@ data Flags = Flags
   { flagConfigFile :: !(Maybe FilePath),
     flagPort :: !(Maybe Int)
   }
-  deriving (Show, Eq, Generic)
 
 parseFlags :: OptParse.Parser Flags
 parseFlags =

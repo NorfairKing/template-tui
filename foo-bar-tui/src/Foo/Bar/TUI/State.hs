@@ -4,4 +4,4 @@ data State = State
   deriving (Show)
 
 data ResourceName = ResourceName
-  deriving (Show, Eq, Ord)
+  deriving (Eq, Ord)

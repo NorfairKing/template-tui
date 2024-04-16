@@ -4,10 +4,11 @@ This is a template implementation of a tool with a terminal user interface.
 
 * Haskell code for a TUI with all best practices
 * OptParse for the TUI
-* Coverage report
 * A nix build
 * A stack build
 * A cabal build
+* Coverage report
+* Weeder check
 * Flake-based CI
 * Pre-commit hooks
 
@@ -16,7 +17,7 @@ This is a template implementation of a tool with a terminal user interface.
 This template is **not** free to use.
 See https://template.cs-syd.eu/template/NorfairKing/template-tui for more information.
 
-Copyright (c) 2020-2023 Tom Sydney Kerckhove.
+Copyright (c) 2020-2024 Tom Sydney Kerckhove.
 
 All Rights Reserved.
 
