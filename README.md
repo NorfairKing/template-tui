@@ -4,9 +4,10 @@ This is a template implementation of a tool with a terminal user interface.
 
 * Haskell code for a TUI with all best practices
 * OptParse for the TUI
-* A nix build
 * A stack build
 * A cabal build
+* A nix build
+* A static nix build
 * Coverage report
 * Weeder check
 * Flake-based CI
