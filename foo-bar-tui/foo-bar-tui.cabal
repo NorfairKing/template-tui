@@ -22,6 +22,8 @@ library
       Paths_foo_bar_tui
   hs-source-dirs:
       src
+  build-tool-depends:
+      autoexporter:autoexporter
   build-depends:
       async
     , autodocodec
