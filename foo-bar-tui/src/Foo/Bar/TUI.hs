@@ -1,5 +1,3 @@
-{-# LANGUAGE OverloadedStrings #-}
-
 module Foo.Bar.TUI where
 
 import Brick.BChan
@@ -12,7 +10,8 @@ import Foo.Bar.TUI.Handle
 import Foo.Bar.TUI.OptParse
 import Foo.Bar.TUI.State
 import Foo.Bar.TUI.Worker
-import Graphics.Vty (defaultConfig, mkVty)
+import Graphics.Vty (defaultConfig)
+import Graphics.Vty.Platform.Unix (mkVty)
 
 fooBarTUI :: IO ()
 fooBarTUI = do

@@ -1,6 +1,6 @@
 { mkDerivation, async, autodocodec, autodocodec-yaml, autoexporter
 , base, brick, cursor, directory, envparse, lib, mtl
-, optparse-applicative, path, path-io, text, vty, yaml
+, optparse-applicative, path, path-io, text, vty, vty-unix, yaml
 }:
 mkDerivation {
   pname = "foo-bar-tui";
@@ -10,7 +10,8 @@ mkDerivation {
   isExecutable = true;
   libraryHaskellDepends = [
     async autodocodec autodocodec-yaml base brick cursor directory
-    envparse mtl optparse-applicative path path-io text vty yaml
+    envparse mtl optparse-applicative path path-io text vty vty-unix
+    yaml
   ];
   libraryToolDepends = [ autoexporter ];
   executableHaskellDepends = [ base ];

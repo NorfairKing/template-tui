@@ -29,7 +29,7 @@ with final.haskell.lib;
       final.haskellPackages.fooBarPackages;
 
   haskellPackages = prev.haskellPackages.override (old: {
-    overrides = final.lib.composeExtensions (old.overrides or (_: _: { })) (self: _:
+    overrides = final.lib.composeExtensions (old.overrides or (_: _: { })) (self: super:
       let
         fooBarPkg = name:
           buildFromSdist (overrideCabal (self.callPackage (../${name}/default.nix) { }) (old: {
@@ -66,8 +66,26 @@ with final.haskell.lib;
         fooBarPackages = {
           foo-bar-tui = fooBarPkgWithOwnComp "foo-bar-tui";
         };
+        fixGHC = pkg:
+          if final.stdenv.hostPlatform.isMusl
+          then
+            pkg.override
+              {
+                # To make sure that executables that need template
+                # haskell can be linked statically.
+                enableRelocatedStaticLibs = true;
+                enableShared = false;
+                enableDwarf = false;
+              }
+          else pkg;
+
       in
       {
+        ghc = fixGHC super.ghc;
+        buildHaskellPackages = old.buildHaskellPackages.override (oldBuildHaskellPackages: {
+          ghc = fixGHC oldBuildHaskellPackages.ghc;
+        });
+
         inherit fooBarPackages;
       } // fooBarPackages
     );

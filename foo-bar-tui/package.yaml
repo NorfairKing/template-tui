@@ -22,6 +22,7 @@ library:
   - path-io
   - text
   - vty
+  - vty-unix
   - yaml
 
 executables:
